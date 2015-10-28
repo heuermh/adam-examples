@@ -33,6 +33,6 @@ public final class JavaCountAlignmentsPerRead {
             System.exit(1);
         }
 
-        // ...
+        // ...see https://github.com/bigdatagenomics/adam/issues/855
     }
 }

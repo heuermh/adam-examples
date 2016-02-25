@@ -1,4 +1,4 @@
-adam-commands
+adam-examples
 =============
 
 Examples in Java and Scala for ADAM: Genomic Data System.  Apache 2 licensed.
@@ -11,7 +11,7 @@ Install
  * JDK 1.7 or later, http://openjdk.java.net
  * Scala 2.10.4 or later, http://www.scala-lang.org
  * Apache Maven 3.2.5 or later, http://maven.apache.org
- * Apache Spark 1.4.1 or later, http://spark.apache.org
+ * Apache Spark 1.5.2 or later, http://spark.apache.org
  * ADAM: Genomic Data System 0.19.0 or later, https://github.com/bigdatagenomics/adam
 
 

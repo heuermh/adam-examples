@@ -42,7 +42,7 @@ object CountAlignments {
     val sc = new SparkContext(conf)
     var recs: RDD[AlignmentRecord] = sc.loadAlignments(args(0))
 
-    recs.map(rec => if (rec.getReadMapped) rec.getContig.getContigName else "unmapped")
+    recs.map(rec => if (rec.getReadMapped) rec.getContigName else "unmapped")
       .map(contigName => (contigName, 1))
       .reduceByKey(_ + _)
       .foreach(println)

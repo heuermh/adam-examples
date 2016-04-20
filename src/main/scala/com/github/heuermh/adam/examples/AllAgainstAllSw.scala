@@ -51,8 +51,8 @@ object AllAgainstAllSw {
     val allAgainstAll = contigs.cartesian(contigs)
 
     def sw(pair: (NucleotideContigFragment, NucleotideContigFragment)): (String) = {
-      val sw = new SmithWatermanConstantGapScoring(pair._1.fragmentSequence, pair._2.fragmentSequence, 1.0, 0.0, -0.333, -0.333)
-      pair._1.contig.contigName + "\t" + pair._2.contig.contigName + "\t" + sw.cigarX.toString
+      val sw = new SmithWatermanConstantGapScoring(pair._1.getFragmentSequence, pair._2.getFragmentSequence, 1.0, 0.0, -0.333, -0.333)
+      pair._1.getContig.getContigName + "\t" + pair._2.getContig.getContigName + "\t" + sw.cigarX.toString
     }
 
     val cigar = allAgainstAll.map(sw)

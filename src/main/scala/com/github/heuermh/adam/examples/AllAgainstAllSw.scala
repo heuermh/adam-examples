@@ -17,34 +17,45 @@ package com.github.heuermh.adam.examples
 
 import org.apache.spark.{ SparkConf, SparkContext }
 import org.apache.spark.SparkContext._
+
 import org.apache.spark.rdd.RDD
+
+import org.bdgenomics.adam.algorithms.smithwaterman.SmithWatermanConstantGapScoring
+
 import org.bdgenomics.adam.rdd.ADAMContext._
-import org.bdgenomics.formats.avro.AlignmentRecord
+
+import org.bdgenomics.formats.avro.NucleotideContigFragment
 
 /**
- * Count alignments ADAM example.
+ * All against all Smith Waterman example.
  * 
  * @author  Michael Heuer
  */
-object CountAlignments {
+object AllAgainstAllSw {
   def main(args: Array[String]) {
     if (args.length < 1) {
-      System.err.println("at least one argument required, e.g. foo.sam")
+      System.err.println("at least one argument required, e.g. foo.adam")
       System.exit(1)
     }
 
     val conf = new SparkConf()
-      .setAppName("Count Alignments")
+      .setAppName("All against all Smith Waterman")
       .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
       .set("spark.kryo.registrator", "org.bdgenomics.adam.serialization.ADAMKryoRegistrator")
       .set("spark.kryo.referenceTracking", "true")
 
     val sc = new SparkContext(conf)
-    var recs: RDD[AlignmentRecord] = sc.loadAlignments(args(0))
 
-    recs.map(rec => if (rec.getReadMapped) rec.getContigName else "unmapped")
-      .map(contigName => (contigName, 1))
-      .reduceByKey(_ + _)
-      .foreach(println)
+    val contigFragments: RDD[NucleotideContigFragment] = sc.loadParquet(args(0))
+    val contigs = contigFragments.mergeFragments()
+    val allAgainstAll = contigs.cartesian(contigs)
+
+    def sw(pair: (NucleotideContigFragment, NucleotideContigFragment)): (String) = {
+      val sw = new SmithWatermanConstantGapScoring(pair._1.getFragmentSequence, pair._2.getFragmentSequence, 1.0, 0.0, -0.333, -0.333)
+      pair._1.getContig.getContigName + "\t" + pair._2.getContig.getContigName + "\t" + sw.cigarX.toString
+    }
+
+    val cigar = allAgainstAll.map(sw)
+    cigar.saveAsTextFile(args(0).replace(".adam", ".cigar"))
   }
 }

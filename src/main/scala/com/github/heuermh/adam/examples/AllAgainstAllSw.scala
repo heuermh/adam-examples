@@ -46,16 +46,27 @@ object AllAgainstAllSw {
 
     val sc = new SparkContext(conf)
 
-    val contigFragments: RDD[NucleotideContigFragment] = sc.loadParquet(args(0))
-    val contigs = contigFragments.mergeFragments()
-    val allAgainstAll = contigs.cartesian(contigs)
+    def byContigName(pair: (NucleotideContigFragment, NucleotideContigFragment)): Boolean = {
+      val name1 = pair._1.getContig.getContigName
+      val name2 = pair._2.getContig.getContigName
+      // don't compare identical sequences
+      if (name1 == name2)
+        false
+      // compare only in one direction
+      (name1.compareTo(name2) < 0)
+    }
 
     def sw(pair: (NucleotideContigFragment, NucleotideContigFragment)): (String) = {
       val sw = new SmithWatermanConstantGapScoring(pair._1.getFragmentSequence, pair._2.getFragmentSequence, 1.0, 0.0, -0.333, -0.333)
-      pair._1.getContig.getContigName + "\t" + pair._2.getContig.getContigName + "\t" + sw.cigarX.toString
+      List(pair._1.getContig.getContigName, pair._2.getContig.getContigName, sw.xStart, sw.cigarX.toString, sw.yStart, sw.cigarY.toString)
+        .mkString("\t")
     }
 
-    val cigar = allAgainstAll.map(sw)
+    val contigFragments: RDD[NucleotideContigFragment] = sc.loadParquet(args(0))
+    val contigs = contigFragments.mergeFragments()
+    val allAgainstAll = contigs.cartesian(contigs)
+    val forward = allAgainstAll.filter(byContigName)
+    val cigar = forward.map(sw)
     cigar.saveAsTextFile(args(0).replace(".adam", ".cigar"))
   }
 }

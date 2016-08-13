@@ -24,6 +24,8 @@ import org.bdgenomics.adam.algorithms.smithwaterman.SmithWatermanConstantGapScor
 
 import org.bdgenomics.adam.rdd.ADAMContext._
 
+import org.bdgenomics.adam.rdd.contig.NucleotideContigFragmentRDD
+
 import org.bdgenomics.formats.avro.NucleotideContigFragment
 
 /**
@@ -62,9 +64,11 @@ object AllAgainstAllSw {
         .mkString("\t")
     }
 
-    val contigFragments: RDD[NucleotideContigFragment] = sc.loadParquet(args(0))
+    val contigFragments: NucleotideContigFragmentRDD = sc.loadParquetContigFragments(args(0))
     val contigs = contigFragments.mergeFragments()
-    val allAgainstAll = contigs.cartesian(contigs)
+
+    val contigsRdd: RDD[NucleotideContigFragment] = contigs.rdd
+    val allAgainstAll = contigsRdd.cartesian(contigsRdd)
     val forward = allAgainstAll.filter(byContigName)
     val cigar = forward.map(sw)
     cigar.saveAsTextFile(args(0).replace(".adam", ".cigar"))

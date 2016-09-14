@@ -59,8 +59,19 @@ object AllAgainstAllSw {
     }
 
     def sw(pair: (NucleotideContigFragment, NucleotideContigFragment)): (String) = {
-      val sw = new SmithWatermanConstantGapScoring(pair._1.getFragmentSequence, pair._2.getFragmentSequence, 1.0, 0.0, -0.333, -0.333)
-      List(pair._1.getContig.getContigName, pair._2.getContig.getContigName, sw.xStart, sw.cigarX.toString, sw.yStart, sw.cigarY.toString)
+      val seq1 = pair._1.getFragmentSequence
+      val seq2 = pair._2.getFragmentSequence
+      val name1 = pair._1.getContig.getContigName
+      val name2 = pair._2.getContig.getContigName
+
+      val sw = new SmithWatermanConstantGapScoring(seq1, seq2, 1.0, 0.0, -0.333, -0.333)
+      //val identityX = CigarUtils.percentIdentity(seq1, seq2, sw.yStart, sw.cigarY)
+      //val identityY = CigarUtils.percentIdentity(seq2, seq1, sw.xStart, sw.cigarX)
+      val identityX = CigarUtils.percentIdentity(seq1, seq2, sw.xStart, sw.cigarX)
+      val identityY = CigarUtils.percentIdentity(seq2, seq1, sw.yStart, sw.cigarY)
+      List(name1, name2,
+        sw.xStart, sw.cigarX.toString, identityX,
+        sw.yStart, sw.cigarY.toString, identityY)
         .mkString("\t")
     }
 

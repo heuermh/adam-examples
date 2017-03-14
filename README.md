@@ -4,7 +4,7 @@ adam-examples
 Examples in Java and Scala for ADAM: Genomic Data System.  Apache 2 licensed.
 
 
-###Hacking adam-examples
+### Hacking adam-examples
 
 Install
 
@@ -20,7 +20,7 @@ To build
     $ mvn install
 
 
-###Running adam-examples using ```spark-submit```
+### Running adam-examples using ```spark-submit```
 
     $ spark-submit \
       --master local[4] \

@@ -293,22 +293,22 @@
       <dependency>
         <groupId>org.bdgenomics.adam</groupId>
         <artifactId>adam-apis-spark2_${scala.artifact.suffix}</artifactId>
-        <version>0.23.0-SNAPSHOT</version>
+        <version>${adam.version}</version>
       </dependency>
       <dependency>
         <groupId>org.bdgenomics.adam</groupId>
         <artifactId>adam-cli-spark2_${scala.artifact.suffix}</artifactId>
-        <version>0.23.0-SNAPSHOT</version>
+        <version>${adam.version}</version>
       </dependency>
       <dependency>
         <groupId>org.bdgenomics.adam</groupId>
         <artifactId>adam-core-spark2_${scala.artifact.suffix}</artifactId>
-        <version>0.23.0-SNAPSHOT</version>
+        <version>${adam.version}</version>
       </dependency>
       <dependency>
         <groupId>org.bdgenomics.adam</groupId>
         <artifactId>adam-core-spark2_${scala.artifact.suffix}</artifactId>
-        <version>0.23.0-SNAPSHOT</version>
+        <version>${adam.version}</version>
         <type>test-jar</type>
       </dependency>
       <dependency>

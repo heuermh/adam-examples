@@ -15,6 +15,26 @@
  */
 package com.github.heuermh.adam.examples;
 
+import org.apache.spark.SparkConf;
+import org.apache.spark.SparkContext;
+import org.apache.spark.SparkContext;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.function.Function;
+import org.apache.spark.api.java.function.Function2;
+import org.apache.spark.api.java.function.PairFunction;
+import org.apache.spark.api.java.function.VoidFunction;
+import org.apache.spark.rdd.RDD;
+
+import org.bdgenomics.adam.apis.java.JavaADAMContext;
+import org.bdgenomics.adam.rdd.ADAMContext;
+import org.bdgenomics.adam.rdd.read.AlignmentRecordRDD;
+import org.bdgenomics.formats.avro.AlignmentRecord;
+
+import scala.Function1;
+import scala.Option;
+import scala.Tuple2;
+
 /**
  * Count alignments per read example implemented in Java.
  *
@@ -33,6 +53,43 @@ public final class JavaCountAlignmentsPerRead {
             System.exit(1);
         }
 
-        // ...see https://github.com/bigdatagenomics/adam/issues/855
+        SparkConf conf = new SparkConf()
+            .setAppName("Java Count Alignments Per Read")
+            .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+            .set("spark.kryo.registrator", "org.bdgenomics.adam.serialization.ADAMKryoRegistrator")
+            .set("spark.kryo.referenceTracking", "true");
+
+        SparkContext sc = new SparkContext(conf);
+        JavaADAMContext jac = new JavaADAMContext(new ADAMContext(sc));
+        AlignmentRecordRDD alignments = jac.loadAlignments(args[0]);
+        JavaRDD<AlignmentRecord> jrdd = alignments.jrdd();
+
+        JavaRDD<String> contigNames = jrdd.map(new Function<AlignmentRecord, String>() {
+                @Override
+                public String call(final AlignmentRecord rec) {
+                    return rec.getReadMapped() ? rec.getReadName() : "unmapped";
+                }
+            });
+
+        JavaPairRDD<String, Integer> counts = contigNames.mapToPair(new PairFunction<String, String, Integer>() {
+                @Override
+                public Tuple2<String, Integer> call(final String readName) {
+                    return new Tuple2<String, Integer>(readName, Integer.valueOf(1));
+                }
+            });
+
+        JavaPairRDD<String, Integer> reducedCounts = counts.reduceByKey(new Function2<Integer, Integer, Integer>() {
+                @Override
+                public Integer call(final Integer value0, final Integer value1) {
+                    return Integer.valueOf(value0.intValue() + value1.intValue());
+                }
+            });
+
+        reducedCounts.foreach(new VoidFunction<Tuple2<String, Integer>>() {
+                @Override
+                public void call(final Tuple2<String, Integer> count) {
+                    System.out.println(count.toString());
+                }
+            });
     }
 }

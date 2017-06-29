@@ -18,17 +18,23 @@ package com.github.heuermh.adam.examples;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.apache.spark.SparkContext;
+
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaPairRDD;
+
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.api.java.function.VoidFunction;
+
 import org.apache.spark.rdd.RDD;
 
-import org.bdgenomics.adam.apis.java.JavaADAMContext;
+import org.bdgenomics.adam.api.java.JavaADAMContext;
+
 import org.bdgenomics.adam.rdd.ADAMContext;
+
 import org.bdgenomics.adam.rdd.read.AlignmentRecordRDD;
+
 import org.bdgenomics.formats.avro.AlignmentRecord;
 
 import scala.Function1;

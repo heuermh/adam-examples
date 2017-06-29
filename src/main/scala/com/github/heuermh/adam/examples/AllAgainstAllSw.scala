@@ -49,8 +49,8 @@ object AllAgainstAllSw {
     val sc = new SparkContext(conf)
 
     def byContigName(pair: (NucleotideContigFragment, NucleotideContigFragment)): Boolean = {
-      val name1 = pair._1.getContig.getContigName
-      val name2 = pair._2.getContig.getContigName
+      val name1 = pair._1.getContigName
+      val name2 = pair._2.getContigName
       // don't compare identical sequences
       if (name1 == name2)
         false
@@ -59,14 +59,12 @@ object AllAgainstAllSw {
     }
 
     def sw(pair: (NucleotideContigFragment, NucleotideContigFragment)): (String) = {
-      val seq1 = pair._1.getFragmentSequence
-      val seq2 = pair._2.getFragmentSequence
-      val name1 = pair._1.getContig.getContigName
-      val name2 = pair._2.getContig.getContigName
+      val seq1 = pair._1.getSequence
+      val seq2 = pair._2.getSequence
+      val name1 = pair._1.getContigName
+      val name2 = pair._2.getContigName
 
       val sw = new SmithWatermanConstantGapScoring(seq1, seq2, 1.0, 0.0, -0.333, -0.333)
-      //val identityX = CigarUtils.percentIdentity(seq1, seq2, sw.yStart, sw.cigarY)
-      //val identityY = CigarUtils.percentIdentity(seq2, seq1, sw.xStart, sw.cigarX)
       val identityX = CigarUtils.percentIdentity(seq1, seq2, sw.xStart, sw.cigarX)
       val identityY = CigarUtils.percentIdentity(seq2, seq1, sw.yStart, sw.cigarY)
       List(name1, name2,

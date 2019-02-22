@@ -34,7 +34,7 @@ import org.bdgenomics.adam.api.java.JavaADAMContext;
 
 import org.bdgenomics.adam.rdd.ADAMContext;
 
-import org.bdgenomics.adam.rdd.read.AlignmentRecordRDD;
+import org.bdgenomics.adam.rdd.read.AlignmentRecordDataset;
 
 import org.bdgenomics.formats.avro.AlignmentRecord;
 
@@ -68,20 +68,20 @@ public final class JavaCountAlignments {
 
         SparkContext sc = new SparkContext(conf);
         JavaADAMContext jac = new JavaADAMContext(new ADAMContext(sc));
-        AlignmentRecordRDD alignments = jac.loadAlignments(args[0]);
+        AlignmentRecordDataset alignments = jac.loadAlignments(args[0]);
         JavaRDD<AlignmentRecord> jrdd = alignments.jrdd();
 
-        JavaRDD<String> contigNames = jrdd.map(new Function<AlignmentRecord, String>() {
+        JavaRDD<String> referenceNames = jrdd.map(new Function<AlignmentRecord, String>() {
                 @Override
                 public String call(final AlignmentRecord rec) {
-                    return rec.getReadMapped() ? rec.getContigName() : "unmapped";
+                    return rec.getReadMapped() ? rec.getReferenceName() : "unmapped";
                 }
             });
 
-        JavaPairRDD<String, Integer> counts = contigNames.mapToPair(new PairFunction<String, String, Integer>() {
+        JavaPairRDD<String, Integer> counts = referenceNames.mapToPair(new PairFunction<String, String, Integer>() {
                 @Override
-                public Tuple2<String, Integer> call(final String contigName) {
-                    return new Tuple2<String, Integer>(contigName, Integer.valueOf(1));
+                public Tuple2<String, Integer> call(final String referenceName) {
+                    return new Tuple2<String, Integer>(referenceName, Integer.valueOf(1));
                 }
             });
 

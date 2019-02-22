@@ -19,7 +19,7 @@ import org.apache.spark.{ SparkConf, SparkContext }
 import org.apache.spark.SparkContext._
 import org.apache.spark.rdd.RDD
 import org.bdgenomics.adam.rdd.ADAMContext._
-import org.bdgenomics.adam.rdd.read.AlignmentRecordRDD
+import org.bdgenomics.adam.rdd.read.AlignmentRecordDataset
 import org.bdgenomics.formats.avro.AlignmentRecord
 
 /**
@@ -41,11 +41,11 @@ object CountAlignments {
       .set("spark.kryo.referenceTracking", "true")
 
     val sc = new SparkContext(conf)
-    var alignments: AlignmentRecordRDD = sc.loadAlignments(args(0))
+    var alignments: AlignmentRecordDataset = sc.loadAlignments(args(0))
     var rdd: RDD[AlignmentRecord] = alignments.rdd
 
-    rdd.map(rec => if (rec.getReadMapped) rec.getContigName else "unmapped")
-      .map(contigName => (contigName, 1))
+    rdd.map(rec => if (rec.getReadMapped) rec.getReferenceName else "unmapped")
+      .map(referenceName => (referenceName, 1))
       .reduceByKey(_ + _)
       .foreach(println)
   }

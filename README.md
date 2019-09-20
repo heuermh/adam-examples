@@ -1,6 +1,7 @@
 adam-examples
 =============
 
+[![Build Status](https://travis-ci.org/heuermh/adam-examples.svg?branch=master)](https://travis-ci.org/heuermh/adam-examples)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.heuermh.adamexamples/adam-examples_2.11.svg?maxAge=600)](http://search.maven.org/#search%7Cga%7C1%7Ccom.github.heuermh.adamexamples)
 
 Examples in Java and Scala for ADAM: Genomic Data System.  Apache 2 licensed.

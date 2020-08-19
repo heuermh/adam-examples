@@ -12,10 +12,10 @@ Examples in Java and Scala for ADAM: Genomic Data System.  Apache 2 licensed.
 Install
 
  * JDK 1.8 or later, http://openjdk.java.net
- * Scala 2.11.12 or later, http://www.scala-lang.org
+ * Scala 2.12.8 or later, http://www.scala-lang.org
  * Apache Maven 3.3.1 or later, http://maven.apache.org
- * Apache Spark 2.4.4 or later, http://spark.apache.org
- * ADAM: Genomic Data System 0.30.0 or later, https://github.com/bigdatagenomics/adam
+ * Apache Spark 3.0.0 or later, http://spark.apache.org
+ * ADAM: Genomic Data System 0.32.0 or later, https://github.com/bigdatagenomics/adam
 
 
 To build
@@ -28,7 +28,7 @@ To build
     $ spark-submit \
       --master local[4] \
       --class com.github.heuermh.adam.examples.CountAlignments \
-      target/adam-examples_2.11-0.31.0-SNAPSHOT.jar \
+      target/adam-examples_2.12-${ADAM_VERSION}.jar \
       src/test/resources/small.sam
     
     (1,20)
@@ -37,7 +37,7 @@ To build
     $ spark-submit \
       --master local[4] \
       --class com.github.heuermh.adam.examples.CountAlignmentsPerRead \
-      target/adam-examples_2.11-0.31.0-SNAPSHOT.jar \
+      target/adam-examples_2.12-${ADAM_VERSION}.jar \
       src/test/resources/small.sam
     
     (simread:1:237728409:true,1)

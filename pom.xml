@@ -35,10 +35,10 @@
     </developer>
   </developers>
   <properties>
-    <adam.version>0.32.0</adam.version>
+    <adam.version>0.33.0</adam.version>
     <scala.version>2.12.8</scala.version>
     <scala.artifact.suffix>2.12</scala.artifact.suffix>
-    <spark.version>3.0.0</spark.version>
+    <spark.version>3.0.1</spark.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
     <maven.enforcer.maven-version>[3.3.1,)</maven.enforcer.maven-version>
@@ -51,11 +51,6 @@
     <testOutputDirectory>target/scala-${scala.version}/test-classes</testOutputDirectory>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>net.alchim31.maven</groupId>
-          <artifactId>scala-maven-plugin</artifactId>
-          <version>3.2.2</version>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>

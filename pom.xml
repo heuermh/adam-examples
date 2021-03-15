@@ -35,10 +35,10 @@
     </developer>
   </developers>
   <properties>
-    <adam.version>0.33.0</adam.version>
-    <scala.version>2.12.8</scala.version>
+    <adam.version>0.34.0</adam.version>
+    <scala.version>2.12.10</scala.version>
     <scala.artifact.suffix>2.12</scala.artifact.suffix>
-    <spark.version>3.0.1</spark.version>
+    <spark.version>3.0.2</spark.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
     <maven.enforcer.maven-version>[3.3.1,)</maven.enforcer.maven-version>
@@ -154,7 +154,7 @@
         <dependencies>
           <dependency>
             <groupId>org.bdgenomics.adam</groupId>
-            <artifactId>adam-shade-spark2_${scala.artifact.suffix}</artifactId>
+            <artifactId>adam-shade-spark3_${scala.artifact.suffix}</artifactId>
             <version>${adam.version}</version>
           </dependency>
         </dependencies>
@@ -277,7 +277,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.13.1</version>
+        <version>4.13.2</version>
       </dependency>
       <dependency>
         <groupId>org.apache.avro</groupId>
@@ -301,22 +301,22 @@
       </dependency>
       <dependency>
         <groupId>org.bdgenomics.adam</groupId>
-        <artifactId>adam-apis-spark2_${scala.artifact.suffix}</artifactId>
+        <artifactId>adam-apis-spark3_${scala.artifact.suffix}</artifactId>
         <version>${adam.version}</version>
       </dependency>
       <dependency>
         <groupId>org.bdgenomics.adam</groupId>
-        <artifactId>adam-cli-spark2_${scala.artifact.suffix}</artifactId>
+        <artifactId>adam-cli-spark3_${scala.artifact.suffix}</artifactId>
         <version>${adam.version}</version>
       </dependency>
       <dependency>
         <groupId>org.bdgenomics.adam</groupId>
-        <artifactId>adam-core-spark2_${scala.artifact.suffix}</artifactId>
+        <artifactId>adam-core-spark3_${scala.artifact.suffix}</artifactId>
         <version>${adam.version}</version>
       </dependency>
       <dependency>
         <groupId>org.bdgenomics.adam</groupId>
-        <artifactId>adam-core-spark2_${scala.artifact.suffix}</artifactId>
+        <artifactId>adam-core-spark3_${scala.artifact.suffix}</artifactId>
         <version>${adam.version}</version>
         <type>test-jar</type>
       </dependency>
@@ -347,22 +347,22 @@
     </dependency>
     <dependency>
       <groupId>org.bdgenomics.adam</groupId>
-      <artifactId>adam-apis-spark2_${scala.artifact.suffix}</artifactId>
+      <artifactId>adam-apis-spark3_${scala.artifact.suffix}</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.bdgenomics.adam</groupId>
-      <artifactId>adam-cli-spark2_${scala.artifact.suffix}</artifactId>
+      <artifactId>adam-cli-spark3_${scala.artifact.suffix}</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.bdgenomics.adam</groupId>
-      <artifactId>adam-core-spark2_${scala.artifact.suffix}</artifactId>
+      <artifactId>adam-core-spark3_${scala.artifact.suffix}</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.bdgenomics.adam</groupId>
-      <artifactId>adam-core-spark2_${scala.artifact.suffix}</artifactId>
+      <artifactId>adam-core-spark3_${scala.artifact.suffix}</artifactId>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

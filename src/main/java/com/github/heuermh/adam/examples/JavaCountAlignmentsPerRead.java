@@ -31,9 +31,9 @@ import org.apache.spark.rdd.RDD;
 
 import org.bdgenomics.adam.api.java.JavaADAMContext;
 
-import org.bdgenomics.adam.rdd.ADAMContext;
+import org.bdgenomics.adam.ds.ADAMContext;
 
-import org.bdgenomics.adam.rdd.read.AlignmentDataset;
+import org.bdgenomics.adam.ds.read.AlignmentDataset;
 
 import org.bdgenomics.formats.avro.Alignment;
 

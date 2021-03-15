@@ -18,8 +18,8 @@ package com.github.heuermh.adam.examples
 import org.apache.spark.{ SparkConf, SparkContext }
 import org.apache.spark.SparkContext._
 import org.apache.spark.rdd.RDD
-import org.bdgenomics.adam.rdd.ADAMContext._
-import org.bdgenomics.adam.rdd.read.AlignmentDataset
+import org.bdgenomics.adam.ds.ADAMContext._
+import org.bdgenomics.adam.ds.read.AlignmentDataset
 import org.bdgenomics.formats.avro.Alignment
 
 /**

@@ -15,7 +15,7 @@ Install
  * Scala 2.12.10 or later, http://www.scala-lang.org
  * Apache Maven 3.3.1 or later, http://maven.apache.org
  * Apache Spark 3.0.2 or later, http://spark.apache.org
- * ADAM: Genomic Data System 0.34.0 or later, https://github.com/bigdatagenomics/adam
+ * ADAM: Genomic Data System 0.35.0 or later, https://github.com/bigdatagenomics/adam
 
 
 To build
